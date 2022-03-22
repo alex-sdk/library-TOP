@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+   <header>
+       Library
+   </header>
+   <main>
+       <button data-modal-target="#modal">+ New Book</button>
+       <div class="modal" id="modal">
+           <button data-close-button class="close-btn">&times;</button>
+           <div>
+                <label for="Author">Author</label>
+                <input type="text" id="Author" maxlength="25" minlength="1" required> 
+            </div>
+            <div>
+                <label for="Title">Title</label>
+                <input type="text" id="Title" maxlength="25" minlength="1" required>
+            </div>
+            <div>
+                <label for="Genre">Genre</label>
+                <input type="text" id="Genre" maxlength="25" minlength="1" required>
+            </div> 
+            <button class="submit-btn" type="submit">+ Add Book</button>
+       </div>
+       <div id="overlay"></div>
+       <div class="bookGrid">
+       </div>
+   </main>
+   <footer><a href="https://github.com/alex-sdk">Alex-sdk</a> - <a href="https://www.theodinproject.com/">The Odin Project</a></footer>
+</body>
+</html>
