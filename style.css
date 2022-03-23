@@ -103,3 +103,9 @@ input, button{
     pointer-events: all;
     opacity: 1;
 }
+.card div + button.read{
+    background-color: green;
+}
+.card div + button.notRead{
+    background-color: red;
+}
