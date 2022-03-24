@@ -1,13 +1,10 @@
-//todo: Implement local storage properly
-//todo: fix remove button
-//todo: display cards properly by not making same cards
-
 let myLibrary = [];
 
 const openModalButtons = document.querySelectorAll('[data-modal-target]');
 const closeModalButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
 const submitButton = document.querySelector('.submit-btn');
+const bookGrid = document.querySelector('.bookGrid');
 
 openModalButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -35,7 +32,8 @@ overlay.addEventListener('click', () => {
 
 submitButton.addEventListener('click', () => {
     getInput()
-    displayBooks(myLibrary)
+    appendCard(myLibrary)
+    setData()
 });
 
 function getInput() {
@@ -63,9 +61,54 @@ function addBookToLibrary(Author, Title, Genre) {
     const book = new Book(Author, Title, Genre);
     myLibrary.push(book);
 }
-function displayBooks(Arr) {
-    const bookGrid = document.querySelector('.bookGrid');
-    for (let i = 0; i < Arr.length; i++) {
+function appendCard(Arr) {
+        const card = document.createElement('div');
+        card.classList = 'card';
+        bookGrid.appendChild(card)
+        
+        const contentAuthor = document.createElement('div');
+        contentAuthor.innerText = Arr[Arr.length -1].Author;
+        card.appendChild(contentAuthor);
+        
+        const contentTitle = document.createElement('div');
+        contentTitle.innerText = Arr[Arr.length - 1].Title;
+        card.appendChild(contentTitle);
+
+        const contentGenre = document.createElement('div');
+        contentGenre.innerText = Arr[Arr.length - 1].Genre;
+        card.appendChild(contentGenre);
+
+        const buttonRead = document.createElement('button');
+        buttonRead.innerText = 'Not Read';
+        buttonRead.classList = 'notRead';
+        card.appendChild(buttonRead);
+        
+        const removeButton = document.createElement('button');
+        removeButton.innerText = 'Remove';
+        card.appendChild(removeButton);
+
+        buttonRead.addEventListener('click', () => {
+            if (buttonRead.innerText == 'Read') {
+                buttonRead.innerText = 'Not Read';
+                buttonRead.classList.remove('read')
+                buttonRead.classList = 'notRead';
+            } else {
+                buttonRead.classList = 'read';
+                buttonRead.classList.remove('notRead');
+                buttonRead.innerText = 'Read';
+            }
+        });
+
+        removeButton.addEventListener('click', () => {
+            bookGrid.removeChild(card);
+            delete Arr[Arr.length - 1];
+            let newArr = Arr.filter(value => Object.keys(value).length !== 0);
+            myLibrary = newArr;
+            setData()
+        });
+}
+function displayAllBooks(Arr) {
+     for (let i = 0; i < Arr.length; i++) {
         const card = document.createElement('div');
         card.classList = 'card';
         bookGrid.appendChild(card)
@@ -104,7 +147,11 @@ function displayBooks(Arr) {
         });
 
         removeButton.addEventListener('click', () => {
-
+            bookGrid.removeChild(card);
+            delete Arr[i];
+            let newArr = Arr.filter(value => Object.keys(value).length !== 0);
+            myLibrary = newArr;
+            setData()
         });
     }
 }
@@ -114,12 +161,12 @@ function setData() {
     
 function restore() {
     if (!localStorage.myLibrary) {
-        displayBooks(myLibrary)
+        displayAllBooks(myLibrary)
     }else {
         let objects =localStorage.getItem('myLibrary');
         objects = JSON.parse(objects);
         myLibrary = objects;
-        displayBooks(myLibrary)
+        displayAllBooks(myLibrary)
         }
 }
 restore()
