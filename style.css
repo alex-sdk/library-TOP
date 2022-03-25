@@ -74,7 +74,7 @@ label{
     width: 25px;
     margin-right: 2rem;
 }
-input, button{
+input, button, select, option{
     color: black;
 }
 .submit-btn{

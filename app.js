@@ -40,7 +40,8 @@ function getInput() {
     const Author = document.getElementById("Author").value;
     const Title = document.getElementById("Title").value;
     const Genre = document.getElementById("Genre").value;
-    addBookToLibrary(Author, Title, Genre)
+    const isRead = document.getElementById("Read").value
+    addBookToLibrary(Author, Title, Genre, isRead)
 }
 function openModal(modal) {
     if (modal == null) return;
@@ -52,13 +53,14 @@ function closeModal(modal) {
     modal.classList.remove('active');
     overlay.classList.remove('active');
 }
-function Book(Author, Title, Genre) {
+function Book(Author, Title, Genre, isRead) {
     this.Author = Author;
     this.Title = Title;
     this.Genre = Genre;
+    this.isRead = isRead;
 }
-function addBookToLibrary(Author, Title, Genre) {
-    const book = new Book(Author, Title, Genre);
+function addBookToLibrary(Author, Title, Genre, isRead) {
+    const book = new Book(Author, Title, Genre, isRead);
     myLibrary.push(book);
 }
 function appendCard(Arr) {
