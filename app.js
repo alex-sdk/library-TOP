@@ -81,8 +81,13 @@ function appendCard(Arr) {
         card.appendChild(contentGenre);
 
         const buttonRead = document.createElement('button');
-        buttonRead.innerText = 'Not Read';
-        buttonRead.classList = 'notRead';
+        if (Arr[Arr.length - 1].isRead == "Yes") {
+            buttonRead.innerText = 'Read';
+            buttonRead.classList = 'read';
+        } else {
+            buttonRead.innerText = 'Not Read';
+            buttonRead.classList = 'notRead';
+        }  
         card.appendChild(buttonRead);
         
         const removeButton = document.createElement('button');
@@ -94,11 +99,14 @@ function appendCard(Arr) {
                 buttonRead.innerText = 'Not Read';
                 buttonRead.classList.remove('read')
                 buttonRead.classList = 'notRead';
+                Arr[Arr.length - 1].isRead = "No";
             } else {
                 buttonRead.classList = 'read';
                 buttonRead.classList.remove('notRead');
                 buttonRead.innerText = 'Read';
+                Arr[Arr.length - 1].isRead = "Yes";
             }
+            setData()
         });
 
         removeButton.addEventListener('click', () => {
@@ -110,7 +118,7 @@ function appendCard(Arr) {
         });
 }
 function displayAllBooks(Arr) {
-     for (let i = 0; i < Arr.length; i++) {
+    for (let i = 0; i < Arr.length; i++) {
         const card = document.createElement('div');
         card.classList = 'card';
         bookGrid.appendChild(card)
@@ -128,8 +136,13 @@ function displayAllBooks(Arr) {
         card.appendChild(contentGenre);
 
         const buttonRead = document.createElement('button');
-        buttonRead.innerText = 'Not Read';
-        buttonRead.classList = 'notRead';
+        if (Arr[i].isRead == "Yes") {
+            buttonRead.innerText = 'Read';
+            buttonRead.classList = 'read';
+        } else {
+            buttonRead.innerText = 'Not Read';
+            buttonRead.classList = 'notRead';
+        }  
         card.appendChild(buttonRead);
         
         const removeButton = document.createElement('button');
@@ -141,11 +154,14 @@ function displayAllBooks(Arr) {
                 buttonRead.innerText = 'Not Read';
                 buttonRead.classList.remove('read')
                 buttonRead.classList = 'notRead';
+                Arr[i].isRead = "No";
             } else {
                 buttonRead.classList = 'read';
                 buttonRead.classList.remove('notRead');
                 buttonRead.innerText = 'Read';
+                Arr[Arr.length - 1].isRead = "Yes";
             }
+            setData()
         });
 
         removeButton.addEventListener('click', () => {
