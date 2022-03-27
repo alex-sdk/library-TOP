@@ -11,9 +11,6 @@ const inputs = document.querySelectorAll('input');
 openModalButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modal = document.querySelector("#modal");
-        document.getElementById('Author').value = "";
-        document.getElementById('Title').value = "";
-        document.getElementById('Genre').value = "";
         openModal(modal)
     });
 });
@@ -36,12 +33,15 @@ submitButton.addEventListener('click', () => {
     inputs.forEach(input => { 
         validForm = input.checkValidity();
         if (!validForm) {
-            return
+            return;
         }
     });
     if (validForm) {
     addBookToLibrary()
     appendCard(myLibrary)
+    document.getElementById('Author').value = "";
+    document.getElementById('Title').value = "";
+    document.getElementById('Genre').value = "";
     setData()
     }
 });
@@ -164,7 +164,7 @@ function displayAllBooks(Arr) {
                 buttonRead.classList = 'read';
                 buttonRead.classList.remove('notRead');
                 buttonRead.innerText = 'Read';
-                Arr[Arr.length - 1].isRead = "Yes";
+                Arr[i].isRead = "Yes";
             }
             setData()
         });
