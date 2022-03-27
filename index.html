@@ -16,27 +16,29 @@
    <main>
        <button data-modal-target="#modal">+ New Book</button>
        <div class="modal" id="modal">
-           <button data-close-button class="close-btn">&times;</button>
-           <div>
-                <label for="Author">Author</label>
-                <input type="text" id="Author" maxlength="25" minlength="1" required> 
-            </div>
-            <div>
-                <label for="Title">Title</label>
-                <input type="text" id="Title" maxlength="25" minlength="1" required>
-            </div>
-            <div>
-                <label for="Genre">Genre</label>
-                <input type="text" id="Genre" maxlength="25" minlength="1" required>
-            </div> 
-            <div>
-                <label for="Read">Read</label>
-                    <select name="Read" id="Read">
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
-            </div>
-            <button class="submit-btn" data-close-button="" type="submit">+ Add Book</button>
+            <button data-close-button class="close-btn">&times;</button>
+           <form action="#" method="POST">
+                <div>
+                    <label for="Author">Author</label>
+                    <input type="text" id="Author" maxlength="25" minlength="1" name="Author"required> 
+                </div>
+                <div>
+                    <label for="Title">Title</label>
+                    <input type="text" id="Title" maxlength="25" minlength="1" name="Title" required>
+                </div>
+                <div>
+                    <label for="Genre">Genre</label>
+                    <input type="text" id="Genre" maxlength="25" minlength="1" name="Genre" required>
+                </div> 
+                <div>
+                    <label for="Read">Read</label>
+                        <select name="Read" id="Read">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                </div>
+            <button class="submit-btn" type="submit">+ Add Book</button>
+            </form>
        </div>
        <div id="overlay"></div>
        <div class="bookGrid">

@@ -14,7 +14,7 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 15%;
+    min-height: 15%;
     background-color: #1B2F33;
     font-size: 5rem;
 }
@@ -52,7 +52,7 @@ footer,a{
     justify-content: center;
     align-items:flex-start;
     position: fixed;
-    top: 28%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     transition: 200ms ease-in-out;
@@ -63,10 +63,19 @@ footer,a{
     width: 350px;
     max-width: 50%;
     min-height: 300px;
-    gap: 2.5rem;
 }
 .modal.active{
     transform: translate(-50%, -50%) scale(1);
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+form div{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 label{
     display: inline-block;

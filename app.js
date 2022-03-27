@@ -1,10 +1,12 @@
 let myLibrary = [];
+let validForm = null;
 
 const openModalButtons = document.querySelectorAll('[data-modal-target]');
 const closeModalButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
 const submitButton = document.querySelector('.submit-btn');
 const bookGrid = document.querySelector('.bookGrid');
+const inputs = document.querySelectorAll('input');
 
 openModalButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -31,25 +33,24 @@ overlay.addEventListener('click', () => {
 });
 
 submitButton.addEventListener('click', () => {
-    getInput()
+    inputs.forEach(input => { 
+        validForm = input.checkValidity();
+        if (!validForm) {
+            return
+        }
+    });
+    if (validForm) {
+    addBookToLibrary()
     appendCard(myLibrary)
     setData()
+    }
 });
 
-function getInput() {
-    const Author = document.getElementById("Author").value;
-    const Title = document.getElementById("Title").value;
-    const Genre = document.getElementById("Genre").value;
-    const isRead = document.getElementById("Read").value
-    addBookToLibrary(Author, Title, Genre, isRead)
-}
 function openModal(modal) {
-    if (modal == null) return;
     modal.classList.add('active');
     overlay.classList.add('active');
 }
 function closeModal(modal) {
-    if (modal == null) return;
     modal.classList.remove('active');
     overlay.classList.remove('active');
 }
@@ -59,7 +60,11 @@ function Book(Author, Title, Genre, isRead) {
     this.Genre = Genre;
     this.isRead = isRead;
 }
-function addBookToLibrary(Author, Title, Genre, isRead) {
+function addBookToLibrary() {
+    const Author = document.getElementById("Author").value;
+    const Title = document.getElementById("Title").value;
+    const Genre = document.getElementById("Genre").value;
+    const isRead = document.getElementById("Read").value
     const book = new Book(Author, Title, Genre, isRead);
     myLibrary.push(book);
 }
@@ -175,8 +180,7 @@ function displayAllBooks(Arr) {
 }
 function setData() {
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));    
-}
-    
+} 
 function restore() {
     if (!localStorage.myLibrary) {
         displayAllBooks(myLibrary)
@@ -185,6 +189,6 @@ function restore() {
         objects = JSON.parse(objects);
         myLibrary = objects;
         displayAllBooks(myLibrary)
-        }
+    }
 }
 restore()
