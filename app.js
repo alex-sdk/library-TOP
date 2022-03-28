@@ -1,6 +1,4 @@
 let myLibrary = [];
-let validForm = null;
-
 const openModalButtons = document.querySelectorAll('[data-modal-target]');
 const closeModalButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
@@ -30,15 +28,15 @@ overlay.addEventListener('click', () => {
 });
 
 submitButton.addEventListener('click', () => {
-    inputs.forEach(input => { 
-        validForm = input.checkValidity();
-        if (!validForm) {
-            return;
+    let validForm = Boolean;
+    if (inputs.item(0).checkValidity() == false || inputs.item(1).checkValidity() == false || inputs.item(2).checkValidity() == false) {
+                validForm = false;
+    } else {
+            validForm = true;
         }
-    });
     if (validForm) {
     addBookToLibrary()
-    appendCard(myLibrary)
+    appendBook(myLibrary)
     document.getElementById('Author').value = "";
     document.getElementById('Title').value = "";
     document.getElementById('Genre').value = "";
@@ -68,115 +66,94 @@ function addBookToLibrary() {
     const book = new Book(Author, Title, Genre, isRead);
     myLibrary.push(book);
 }
-function appendCard(Arr) {
-        const card = document.createElement('div');
-        card.classList = 'card';
-        bookGrid.appendChild(card)
-        
-        const contentAuthor = document.createElement('div');
-        contentAuthor.innerText = Arr[Arr.length -1].Author;
-        card.appendChild(contentAuthor);
-        
-        const contentTitle = document.createElement('div');
-        contentTitle.innerText = Arr[Arr.length - 1].Title;
-        card.appendChild(contentTitle);
-
-        const contentGenre = document.createElement('div');
-        contentGenre.innerText = Arr[Arr.length - 1].Genre;
-        card.appendChild(contentGenre);
-
-        const buttonRead = document.createElement('button');
-        if (Arr[Arr.length - 1].isRead == "Yes") {
-            buttonRead.innerText = 'Read';
-            buttonRead.classList = 'read';
-        } else {
-            buttonRead.innerText = 'Not Read';
-            buttonRead.classList = 'notRead';
-        }  
-        card.appendChild(buttonRead);
-        
-        const removeButton = document.createElement('button');
-        removeButton.innerText = 'Remove';
-        card.appendChild(removeButton);
-
-        buttonRead.addEventListener('click', () => {
-            if (buttonRead.innerText == 'Read') {
-                buttonRead.innerText = 'Not Read';
-                buttonRead.classList.remove('read')
-                buttonRead.classList = 'notRead';
-                Arr[Arr.length - 1].isRead = "No";
-            } else {
-                buttonRead.classList = 'read';
-                buttonRead.classList.remove('notRead');
-                buttonRead.innerText = 'Read';
-                Arr[Arr.length - 1].isRead = "Yes";
-            }
-            setData()
-        });
-
-        removeButton.addEventListener('click', () => {
-            bookGrid.removeChild(card);
-            delete Arr[Arr.length - 1];
-            let newArr = Arr.filter(value => Object.keys(value).length !== 0);
-            myLibrary = newArr;
-            setData()
-        });
+function appendRemoveButton(card, removeButton) {
+    removeButton.innerText = 'Remove';
+    card.appendChild(removeButton);
+}
+function appendReadButton(card, buttonRead, Arr, i) {
+    if (Arr[i].isRead == "Yes") {
+        buttonRead.innerText = 'Read';
+        buttonRead.classList = 'read';
+    }else {
+        buttonRead.innerText = 'Not Read';
+        buttonRead.classList = 'notRead';
+    }  
+    card.appendChild(buttonRead);
+}
+function appendGenre(card, contentGenre, Arr, i) {
+    contentGenre.innerText = Arr[i].Genre;
+    card.appendChild(contentGenre);
+}
+function appendTitle(card, contentTitle, Arr, i) {
+    contentTitle.innerText = Arr[i].Title;
+    card.appendChild(contentTitle);
+}
+function appendAuthor(card, contentAuthor, Arr, i) {
+    contentAuthor.innerText = Arr[i].Author;
+    card.appendChild(contentAuthor);
+}
+function appendCard(card, bookGrid) {
+    card.classList = 'card';
+    bookGrid.appendChild(card);
+}
+function appendBook(Arr) {
+    const card = document.createElement('div');
+    const removeButton = document.createElement('button');
+    const buttonRead = document.createElement('button');
+    const contentGenre = document.createElement('div');
+    const contentAuthor = document.createElement('div');
+    const contentTitle = document.createElement('div');
+    
+    appendCard(card, bookGrid)
+    appendAuthor(card, contentAuthor, Arr, Arr.length - 1)
+    appendTitle(card, contentTitle, Arr, Arr.length - 1)
+    appendGenre(card, contentGenre, Arr, Arr.length - 1)
+    appendReadButton(card, buttonRead, Arr, Arr.length - 1)
+    appendRemoveButton(card, removeButton)
+    changeReadStatus(buttonRead, Arr, Arr.length - 1)
+    removeButtonEvent(card, removeButton, Arr, Arr.length - 1)
 }
 function displayAllBooks(Arr) {
     for (let i = 0; i < Arr.length; i++) {
         const card = document.createElement('div');
-        card.classList = 'card';
-        bookGrid.appendChild(card)
-        
-        const contentAuthor = document.createElement('div');
-        contentAuthor.innerText = Arr[i].Author;
-        card.appendChild(contentAuthor);
-        
-        const contentTitle = document.createElement('div');
-        contentTitle.innerText = Arr[i].Title;
-        card.appendChild(contentTitle);
-
-        const contentGenre = document.createElement('div');
-        contentGenre.innerText = Arr[i].Genre;
-        card.appendChild(contentGenre);
-
-        const buttonRead = document.createElement('button');
-        if (Arr[i].isRead == "Yes") {
-            buttonRead.innerText = 'Read';
-            buttonRead.classList = 'read';
-        } else {
-            buttonRead.innerText = 'Not Read';
-            buttonRead.classList = 'notRead';
-        }  
-        card.appendChild(buttonRead);
-        
         const removeButton = document.createElement('button');
-        removeButton.innerText = 'Remove';
-        card.appendChild(removeButton);
-
-        buttonRead.addEventListener('click', () => {
-            if (buttonRead.innerText == 'Read') {
-                buttonRead.innerText = 'Not Read';
-                buttonRead.classList.remove('read')
-                buttonRead.classList = 'notRead';
-                Arr[i].isRead = "No";
-            } else {
-                buttonRead.classList = 'read';
-                buttonRead.classList.remove('notRead');
-                buttonRead.innerText = 'Read';
-                Arr[i].isRead = "Yes";
-            }
-            setData()
-        });
-
-        removeButton.addEventListener('click', () => {
-            bookGrid.removeChild(card);
-            delete Arr[i];
-            let newArr = Arr.filter(value => Object.keys(value).length !== 0);
-            myLibrary = newArr;
-            setData()
-        });
+        const buttonRead = document.createElement('button');
+        const contentGenre = document.createElement('div');
+        const contentAuthor = document.createElement('div');
+        const contentTitle = document.createElement('div');
+        
+        appendCard(card, bookGrid)
+        appendAuthor(card, contentAuthor, Arr, i)
+        appendTitle(card, contentTitle, Arr, i)
+        appendGenre(card, contentGenre, Arr, i)
+        appendReadButton(card, buttonRead, Arr, i)
+        appendRemoveButton(card, removeButton)
+        changeReadStatus(buttonRead, Arr, i)
+        removeButtonEvent(card, removeButton, Arr, i)
     }
+}
+function removeButtonEvent(card, removeButton, Arr, i) {
+    removeButton.addEventListener('click', () => {
+        bookGrid.removeChild(card);
+        Arr.splice(Arr.length - 1)
+        setData()
+    });
+}
+function changeReadStatus(buttonRead, Arr, i){
+    buttonRead.addEventListener('click', () => {
+        if (buttonRead.innerText == 'Read') {
+            buttonRead.innerText = 'Not Read';
+            buttonRead.classList.remove('read')
+            buttonRead.classList = 'notRead';
+            Arr[i].isRead = "No";
+        } else {
+            buttonRead.classList = 'read';
+            buttonRead.classList.remove('notRead');
+            buttonRead.innerText = 'Read';
+            Arr[i].isRead = "Yes";
+        }
+        setData()
+    });
 }
 function setData() {
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));    
@@ -185,7 +162,7 @@ function restore() {
     if (!localStorage.myLibrary) {
         displayAllBooks(myLibrary)
     }else {
-        let objects =localStorage.getItem('myLibrary');
+        let objects = localStorage.getItem('myLibrary');
         objects = JSON.parse(objects);
         myLibrary = objects;
         displayAllBooks(myLibrary)
