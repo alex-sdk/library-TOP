@@ -52,11 +52,13 @@ function closeModal(modal) {
     modal.classList.remove('active');
     overlay.classList.remove('active');
 }
-function Book(Author, Title, Genre, isRead) {
+class Book{
+    constructor(Author, Title, Genre, isRead) {
     this.Author = Author;
     this.Title = Title;
     this.Genre = Genre;
     this.isRead = isRead;
+    }
 }
 function addBookToLibrary() {
     const Author = document.getElementById("Author").value;
